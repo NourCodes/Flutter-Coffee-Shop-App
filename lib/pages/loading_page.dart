@@ -1,6 +1,6 @@
 import 'dart:async';
+import 'package:coffee_shop_app/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
@@ -19,7 +19,7 @@ class _MyHomePageState extends State<MyHomePage> {
       () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (context) => const SignupScreen(),
           ),
         );
       },
