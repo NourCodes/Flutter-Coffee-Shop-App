@@ -13,17 +13,27 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    navigateToHome();
+  }
+
+  navigateToHome() async {
+    await Future.delayed(const Duration(milliseconds: 2000), () {});
+
+    if (mounted) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const SignupScreen(),
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    Timer(
-      const Duration(seconds: 5),
-      () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => const SignupScreen(),
-          ),
-        );
-      },
-    );
     return Scaffold(
       body: Stack(
         children: [
@@ -38,7 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
                   fit: BoxFit.cover,
@@ -52,23 +61,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Text(
                   "Coffee Makes Everything Better",
                   style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      shadows: [
-                        Shadow(
-                          color: Colors.white12,
-                          blurRadius: 6,
-                        ),
-                        Shadow(
-                          color: Colors.deepOrangeAccent,
-                          blurRadius: 6,
-                        ),
-                        Shadow(
-                          color: Colors.black,
-                          blurRadius: 1,
-                        )
-                      ]),
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    shadows: [
+                      Shadow(
+                        color: Colors.white12,
+                        blurRadius: 6,
+                      ),
+                      Shadow(
+                        color: Colors.deepOrangeAccent,
+                        blurRadius: 6,
+                      ),
+                      Shadow(
+                        color: Colors.black,
+                        blurRadius: 1,
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -16,52 +13,117 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              "images/bk.jpg",
+            ),
+            fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(Colors.white, BlendMode.softLight),
+          ),
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Column(
-              children: [
-                SizedBox(
-                  height: 100,
-                  width: 200,
-                  child: Image.asset("images/logo.png"),
-                ),
-                TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    label: const Text("Email"),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Colors.red),
-                    ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white12,
+                borderRadius: BorderRadius.circular(90),
+              ),
+              child: Image.asset(
+                "images/logo.png",
+                height: 100,
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.brown.shade50,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(10),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    label: const Text("Password"),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Colors.red),
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 12,
+                  ),
+                  child: Column(
+                    children: [
+                      TextField(
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        controller: _emailController,
+                        decoration: InputDecoration(
+                          labelText: "Email",
+                          labelStyle: const TextStyle(
+                            color: Colors.black26,
+                          ),
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      TextField(
+                        style: const TextStyle(color: Colors.black),
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          labelText: "Password",
+                          labelStyle: const TextStyle(
+                            color: Colors.black26,
+                          ),
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.black,
+                          elevation: 7,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Sign in"),
-                ),
-              ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
