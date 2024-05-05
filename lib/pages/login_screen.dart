@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:coffee_shop_app/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -121,6 +121,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Don't have an Account?"),
+                TextButton(
+                  child: const Text(
+                    "Sign Up.",
+                    style: TextStyle(
+                      color: Colors.orangeAccent,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const SignupScreen(),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           ],
         ),
