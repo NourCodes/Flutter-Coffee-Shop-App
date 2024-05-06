@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:coffee_shop_app/pages/auth_screen.dart';
 import 'package:coffee_shop_app/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +27,7 @@ class _MyHomePageState extends State<MyHomePage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const SignupScreen(),
+          builder: (context) => const AuthScreen(),
         ),
       );
     }
