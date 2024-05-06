@@ -1,6 +1,8 @@
 import 'package:coffee_shop_app/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../services/auth.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -111,7 +113,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await Auth().login(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
+                        },
                         child: const Text(
                           "Login",
                           style: TextStyle(color: Colors.white),

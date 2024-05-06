@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/auth.dart';
 import 'login_screen.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -114,7 +115,12 @@ class _SignupScreenState extends State<SignupScreen> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          await Auth().signUp(
+                            _emailController.text,
+                            _passwordController.text,
+                          );
+                        },
                         child: const Text(
                           "Sign Up",
                           style: TextStyle(color: Colors.white),
