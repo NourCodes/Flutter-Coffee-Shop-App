@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:coffee_shop_app/utilities.dart';
+import 'package:coffee_shop_app/utilities/methods.dart';
 
 class Auth {
   final _auth = FirebaseAuth.instance;
