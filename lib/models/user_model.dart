@@ -1,8 +1,5 @@
-import 'coffee_model.dart';
-
-class User {
+class UserModel {
   final String email;
   final String id;
-  Coffee order;
-  User({required this.order, required this.id, required this.email});
+  UserModel({required this.id, required this.email});
 }
