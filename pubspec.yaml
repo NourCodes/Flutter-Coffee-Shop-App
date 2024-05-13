@@ -39,6 +39,7 @@ dependencies:
   firebase_auth:
   fluttertoast:
   provider:
+  readmore: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +69,7 @@ flutter:
       - images/intro_c.gif
       - images/logo.png
       - images/bk.jpg
+      - icons/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -42,7 +42,7 @@ class CartProvider extends ChangeNotifier {
       image:
           'https://plus.unsplash.com/premium_photo-1669687924558-386bff1a0469?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       description:
-          "A single shot of pure espresso, made by forcing hot water through finely-ground coffee beans. It has a bold, intense flavor and a rich crema on top.",
+          "A single shot of pure espresso, made by forcing hot water through finely-ground coffee beans. It has a bold, intense flavor and a rich cream on top.",
     ),
     Coffee(
       price: 4.80,
@@ -62,12 +62,12 @@ class CartProvider extends ChangeNotifier {
       image:
           'https://images.unsplash.com/photo-1620052087057-bfd8235f5874?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       description:
-          "A flat white made with espresso and coconut milk, topped with a thin layer of microfoam. It has a milder flavor compared to a cappuccino, with a subtle hint of coconut.",
+          "A flat white made with espresso and coconut milk, topped with a thin layer of micro foam. It has a milder flavor compared to a cappuccino, with a subtle hint of coconut.",
     ),
   ];
 
   // Map of items in user cart
-  Map<String?, List<Coffee>> cartItems = {};
+  Map<String, List<Coffee>> cartItems = {};
 
   // get list of items
   List<Coffee> getCoffeeList() {
@@ -80,7 +80,7 @@ class CartProvider extends ChangeNotifier {
   }
 
 // Add items to cart
-  void addItems(Coffee coffee, String userId) {
+  addItems(Coffee coffee, String userId) {
     try {
       // check if the user already exists in the cart
       if (cartItems.containsKey(userId)) {
@@ -98,7 +98,7 @@ class CartProvider extends ChangeNotifier {
   }
 
   //removing items from cart
-  void removeItems(Coffee coffee, String userId) {
+  removeItems(Coffee coffee, String userId) {
     // if the user exists in the cart and the cart is not empty
     if (cartItems.containsKey(userId) && cartItems.isNotEmpty) {
       // the specified coffee item is removed from the user's cart

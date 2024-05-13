@@ -1,4 +1,6 @@
+import 'package:coffee_shop_app/pages/coffee_detail.dart';
 import 'package:flutter/material.dart';
+import '../models/coffee_model.dart';
 import '../provider/cart_provider.dart';
 import '../utilities/coffee_box.dart';
 import 'package:provider/provider.dart';
@@ -86,13 +88,24 @@ class _ShopScreenState extends State<ShopScreen> {
               height: MediaQuery.of(context).size.height * 0.4,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: 3,
+                itemCount: value.getCoffeeList().length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
-                    onTap: () {},
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CoffeeBox(),
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CoffeeDetails(
+                            coff: value.coff[index],
+                            size: selectedSize,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: CoffeeBox(
+                        index: index,
+                      ),
                     ),
                   );
                 },
