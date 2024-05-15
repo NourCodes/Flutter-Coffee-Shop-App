@@ -1,12 +1,17 @@
 import 'package:coffee_shop_app/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../models/coffee_model.dart';
 
 class CoffeeBox extends StatelessWidget {
   final int index;
+  final String userId;
+  final Function(Coffee coffee, String size, String userId) onPressed;
   const CoffeeBox({
     super.key,
+    required this.onPressed,
     required this.index,
+    required this.userId,
   });
 
   @override
@@ -102,7 +107,8 @@ class CoffeeBox extends StatelessWidget {
                       icon: const Icon(
                         Icons.add,
                       ),
-                      onPressed: () {},
+                      onPressed: () => onPressed(value.coff[index],
+                          value.coff[index].selectedSize, userId),
                     ),
                   ),
                 ],

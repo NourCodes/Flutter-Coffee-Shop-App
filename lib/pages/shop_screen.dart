@@ -1,4 +1,5 @@
 import 'package:coffee_shop_app/pages/coffee_detail.dart';
+import 'package:coffee_shop_app/services/auth.dart';
 import 'package:flutter/material.dart';
 import '../models/coffee_model.dart';
 import '../provider/cart_provider.dart';
@@ -14,6 +15,22 @@ class ShopScreen extends StatefulWidget {
 
 class _ShopScreenState extends State<ShopScreen> {
   List coffee = ["Cappuccino", "Espresso", "Latte", "Flat White"];
+
+  addItem(Coffee coffee, String userId, String size) {
+    Provider.of<CartProvider>(context, listen: false).addItems(
+      Coffee(
+        description: coffee.description,
+        title: coffee.title,
+        price: coffee.price,
+        rate: coffee.rate,
+        type: coffee.type,
+        image: coffee.image,
+        selectedSize: size,
+      ),
+      userId,
+    );
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +121,10 @@ class _ShopScreenState extends State<ShopScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CoffeeBox(
+                        userId: Auth().currentUser!.uid,
                         index: index,
+                        onPressed: (coffee, size, userId) =>
+                            addItem(coffee, userId, size),
                       ),
                     ),
                   );
