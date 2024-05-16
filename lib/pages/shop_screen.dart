@@ -14,7 +14,24 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
-  List coffee = ["Cappuccino", "Espresso", "Latte", "Flat White"];
+  List<String> coffeeTypes = [
+    "All",
+    "Cappuccino",
+    "Espresso",
+    "Latte",
+    "Flat White"
+  ];
+  List<Coffee> filteredCoffee = [];
+  late String selectedFilter;
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    selectedFilter = coffeeTypes[0];
+    _searchController.clear();
+    filteredCoffee = Provider.of<CartProvider>(context, listen: false).coff;
+    super.initState();
+  }
 
   addItem(Coffee coffee, String userId, String size) {
     Provider.of<CartProvider>(context, listen: false).addItems(
@@ -52,6 +69,18 @@ class _ShopScreenState extends State<ShopScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextField(
+                onChanged: (searchText) {
+                  filteredCoffee = value
+                      .getCoffeeList()
+                      .where(
+                        (element) =>
+                            element.title.toLowerCase() ==
+                            searchText.toLowerCase(),
+                      )
+                      .toList();
+                  setState(() {});
+                },
+                controller: _searchController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(
                     Icons.search,
@@ -80,17 +109,34 @@ class _ShopScreenState extends State<ShopScreen> {
             SizedBox(
               height: 50,
               child: ListView.builder(
-                itemCount: coffee.length,
+                itemCount: coffeeTypes.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
+                  final selectedF = coffeeTypes[index];
+
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          selectedFilter = selectedF;
+                          if (selectedF == "All") {
+                            filteredCoffee = value.getCoffeeList();
+                          } else {
+                            filteredCoffee = value
+                                .getCoffeeList()
+                                .where((element) =>
+                                    element.title == coffeeTypes[index])
+                                .toList();
+                          }
+                        });
+                      },
                       child: Text(
-                        coffee[index],
-                        style: const TextStyle(
-                          color: Colors.white,
+                        coffeeTypes[index],
+                        style: TextStyle(
+                          color: selectedF == selectedFilter
+                              ? Colors.blue
+                              : Colors.white,
                         ),
                       ),
                     ),
@@ -103,33 +149,39 @@ class _ShopScreenState extends State<ShopScreen> {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.4,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: value.getCoffeeList().length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => CoffeeDetails(
-                            coff: value.coff[index],
-                            size: selectedSize,
+              child: filteredCoffee.isEmpty
+                  ? const Center(
+                      child: Text(
+                      "Type Not Found",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ))
+                  : ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: filteredCoffee.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => CoffeeDetails(
+                                  coff: filteredCoffee[index],
+                                  size: selectedSize,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CoffeeBox(
+                              userId: Auth().currentUser!.uid,
+                              coffee: filteredCoffee[index],
+                              onPressed: (coffee, size, userId) =>
+                                  addItem(coffee, userId, size),
+                            ),
                           ),
-                        ),
-                      );
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: CoffeeBox(
-                        userId: Auth().currentUser!.uid,
-                        index: index,
-                        onPressed: (coffee, size, userId) =>
-                            addItem(coffee, userId, size),
-                      ),
+                        );
+                      },
                     ),
-                  );
-                },
-              ),
             ),
           ],
         ),
