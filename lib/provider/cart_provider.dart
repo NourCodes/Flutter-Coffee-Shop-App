@@ -1,6 +1,7 @@
 import 'package:coffee_shop_app/utilities/methods.dart';
 import 'package:flutter/widgets.dart';
 import '../models/coffee_model.dart';
+import '../services/data.dart';
 
 class CartProvider extends ChangeNotifier {
   // list of coffee
@@ -89,6 +90,7 @@ class CartProvider extends ChangeNotifier {
       } else {
         cartItems[userId] = [coffee];
       }
+      Data().saveOrder(coffee, coffee.selectedSize, userId);
       // notify any listeners
       notifyListeners();
     } catch (e) {
@@ -103,7 +105,6 @@ class CartProvider extends ChangeNotifier {
     if (cartItems.containsKey(userId) && cartItems.isNotEmpty) {
       // the specified coffee item is removed from the user's cart
       cartItems[userId]!.remove(coffee);
-
       notifyListeners();
     }
   }

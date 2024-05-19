@@ -24,6 +24,7 @@ class _ShopScreenState extends State<ShopScreen> {
   List<Coffee> filteredCoffee = [];
   late String selectedFilter;
   final TextEditingController _searchController = TextEditingController();
+  final currentUserId = Auth().currentUser!.uid;
 
   @override
   void initState() {
@@ -33,7 +34,11 @@ class _ShopScreenState extends State<ShopScreen> {
     super.initState();
   }
 
-  addItem(Coffee coffee, String userId, String size) {
+  addItem(
+    Coffee coffee,
+    String size,
+    String userId,
+  ) {
     Provider.of<CartProvider>(context, listen: false).addItems(
       Coffee(
         description: coffee.description,
@@ -164,6 +169,8 @@ class _ShopScreenState extends State<ShopScreen> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => CoffeeDetails(
+                                  addItem: (coffee, size, userId) =>
+                                      addItem(coffee, size, userId),
                                   coff: filteredCoffee[index],
                                   size: selectedSize,
                                 ),
@@ -173,10 +180,10 @@ class _ShopScreenState extends State<ShopScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: CoffeeBox(
-                              userId: Auth().currentUser!.uid,
+                              userId: currentUserId,
                               coffee: filteredCoffee[index],
                               onPressed: (coffee, size, userId) =>
-                                  addItem(coffee, userId, size),
+                                  addItem(coffee, size, userId),
                             ),
                           ),
                         );

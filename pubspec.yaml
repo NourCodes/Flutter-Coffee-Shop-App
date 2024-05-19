@@ -40,7 +40,7 @@ dependencies:
   fluttertoast:
   provider:
   readmore: ^3.0.0
-
+  cloud_firestore:
 dev_dependencies:
   flutter_test:
     sdk: flutter

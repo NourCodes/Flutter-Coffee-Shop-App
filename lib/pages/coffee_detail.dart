@@ -1,3 +1,4 @@
+import 'package:coffee_shop_app/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import '../models/coffee_model.dart';
@@ -6,10 +7,12 @@ import '../utilities/icons_box.dart';
 class CoffeeDetails extends StatefulWidget {
   final Coffee coff;
   final List<String> size;
+  final Function(Coffee coffee, String size, String userId) addItem;
   const CoffeeDetails({
     super.key,
     required this.coff,
     required this.size,
+    required this.addItem,
   });
 
   @override
@@ -18,6 +21,7 @@ class CoffeeDetails extends StatefulWidget {
 
 class _CoffeeDetailsState extends State<CoffeeDetails> {
   String selectedSize = "S"; // initialize selectedSize with 'S'
+  final currentUserId = Auth().currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -230,7 +234,8 @@ class _CoffeeDetailsState extends State<CoffeeDetails> {
                     ],
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => widget.addItem(
+                        widget.coff, selectedSize, currentUserId),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orange,
                       shape: RoundedRectangleBorder(

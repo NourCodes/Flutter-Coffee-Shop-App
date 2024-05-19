@@ -22,4 +22,31 @@ class Coffee {
     required this.image,
     this.selectedSize = 'S', // default selectedSize to 'S'
   });
+
+  // Static method to construct a Coffee instance from a Map
+  factory Coffee.fromJson(Map<String, dynamic> json) {
+    return Coffee(
+      description: json['description'] as String,
+      image: json['image'] as String,
+      price: json['price'] as double,
+      rate: json['rate'] as double,
+      selectedSize:
+          json['selectedSize'] as String? ?? 'S', // default to 'S' if null
+      title: json['title'] as String,
+      type: json['type'] as String,
+    );
+  }
+
+  // Method to convert a Coffee instance to a Map
+  Map<String, dynamic> toJson() {
+    return {
+      'description': description,
+      'image': image,
+      'price': price,
+      'rate': rate,
+      'selectedSize': selectedSize,
+      'title': title,
+      'type': type,
+    };
+  }
 }
