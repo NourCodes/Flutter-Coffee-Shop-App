@@ -12,6 +12,8 @@ class Coffee {
   final String title;
   final String description;
   final double rate;
+  String id;
+  final int count;
 
   Coffee({
     required this.description,
@@ -21,6 +23,8 @@ class Coffee {
     required this.type,
     required this.image,
     this.selectedSize = 'S', // default selectedSize to 'S'
+    this.id = "",
+    this.count = 1,
   });
 
   // Static method to construct a Coffee instance from a Map
@@ -34,6 +38,8 @@ class Coffee {
           json['selectedSize'] as String? ?? 'S', // default to 'S' if null
       title: json['title'] as String,
       type: json['type'] as String,
+      id: json["id"] as String,
+      count: json['count'] as int,
     );
   }
 
@@ -47,6 +53,8 @@ class Coffee {
       'selectedSize': selectedSize,
       'title': title,
       'type': type,
+      "id": id,
+      "count": count,
     };
   }
 }

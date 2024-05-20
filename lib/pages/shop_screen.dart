@@ -1,6 +1,7 @@
 import 'package:coffee_shop_app/pages/coffee_detail.dart';
 import 'package:coffee_shop_app/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import '../models/coffee_model.dart';
 import '../provider/cart_provider.dart';
 import '../utilities/coffee_box.dart';
@@ -14,6 +15,8 @@ class ShopScreen extends StatefulWidget {
 }
 
 class _ShopScreenState extends State<ShopScreen> {
+  final String orderId = const Uuid().v1();
+
   List<String> coffeeTypes = [
     "All",
     "Cappuccino",
@@ -48,8 +51,11 @@ class _ShopScreenState extends State<ShopScreen> {
         type: coffee.type,
         image: coffee.image,
         selectedSize: size,
+        id: orderId,
+        count: coffee.count,
       ),
       userId,
+      orderId,
     );
     setState(() {});
   }

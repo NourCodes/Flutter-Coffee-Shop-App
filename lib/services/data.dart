@@ -4,13 +4,46 @@ import '../models/coffee_model.dart';
 
 class Data {
   final _firestore = FirebaseFirestore.instance;
-  saveOrder(Coffee order, String size, String userId) {
+
+  Future saveOrder(Coffee order, String userId, String orderId) async {
     try {
-      _firestore
+      await _firestore
           .collection("users")
           .doc(userId)
           .collection("orders")
-          .add(order.toJson());
+          .doc(orderId)
+          .set(order.toJson());
+    } catch (e) {
+      Methods().showMessage(e.toString());
+    }
+  }
+
+  Future changeCount(
+    int count,
+    String userId,
+    String orderId,
+    Coffee coffee,
+  ) async {
+    try {
+      await _firestore
+          .collection("users")
+          .doc(userId)
+          .collection("orders")
+          .doc(orderId)
+          .update({"count": count});
+    } catch (e) {
+      Methods().showMessage(e.toString());
+    }
+  }
+
+  Future removeOrder(Coffee order, String userId, String orderId) async {
+    try {
+      await _firestore
+          .collection("users")
+          .doc(userId)
+          .collection("orders")
+          .doc(orderId)
+          .delete();
     } catch (e) {
       Methods().showMessage(e.toString());
     }

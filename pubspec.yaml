@@ -41,6 +41,7 @@ dependencies:
   provider:
   readmore: ^3.0.0
   cloud_firestore:
+  uuid:
 dev_dependencies:
   flutter_test:
     sdk: flutter
