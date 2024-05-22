@@ -4,9 +4,6 @@ import '../models/coffee_model.dart';
 import '../services/data.dart';
 
 class CartProvider extends ChangeNotifier {
-/*
-  final String orderId = Uuid().v1();
-*/
   // list of coffee
   List<Coffee> coff = [
     Coffee(
@@ -84,7 +81,7 @@ class CartProvider extends ChangeNotifier {
   }
 
 // Add items to cart
-  addItems(Coffee coffee, String userId, String orderId) async {
+  Future addItems(Coffee coffee, String userId, String orderId) async {
     try {
       // check if the user already exists in the cart
       if (cartItems.containsKey(userId)) {
@@ -106,9 +103,7 @@ class CartProvider extends ChangeNotifier {
   removeItems(Coffee coffee, String userId, String orderId) async {
     // if the user exists in the cart and the cart is not empty
     if (cartItems.containsKey(userId) && cartItems[userId]!.isNotEmpty) {
-      // remove the specified coffee item from the user's cart
       cartItems[userId]!.remove(coffee);
-      await Data().removeOrder(coffee, userId, orderId);
       notifyListeners();
     }
   }

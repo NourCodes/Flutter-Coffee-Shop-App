@@ -19,11 +19,7 @@ class Data {
   }
 
   Future changeCount(
-    int count,
-    String userId,
-    String orderId,
-    Coffee coffee,
-  ) async {
+      int count, String userId, Coffee coffee, String orderId) async {
     try {
       await _firestore
           .collection("users")
@@ -31,12 +27,16 @@ class Data {
           .collection("orders")
           .doc(orderId)
           .update({"count": count});
+
+      if (count == 0) {
+        await removeOrder(userId, orderId);
+      }
     } catch (e) {
       Methods().showMessage(e.toString());
     }
   }
 
-  Future removeOrder(Coffee order, String userId, String orderId) async {
+  Future removeOrder(String userId, String orderId) async {
     try {
       await _firestore
           .collection("users")
