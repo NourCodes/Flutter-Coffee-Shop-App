@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_shop_app/utilities/cart_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../models/coffee_model.dart';
@@ -55,31 +56,13 @@ class _CartScreenState extends State<CartScreen> {
               itemBuilder: (context, index) {
                 Coffee cart = cartItems[index];
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 26,
-                      backgroundImage: NetworkImage(cart.image),
-                    ),
-                    title: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          cart.title,
-                          style: const TextStyle(fontSize: 15),
-                        ),
-                        Text(
-                          "${cart.type}  (${cart.selectedSize})",
-                          style: const TextStyle(
-                              fontSize: 10, color: Colors.white),
-                        ),
-                        Text(
-                          "\$ ${cart.price.toString()}",
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+                    padding: const EdgeInsets.all(8.0),
+                    child: CartItem(
+                      orderId: cart.id,
+                      count: cart.count,
+                      userId: currentUserId,
+                      coffee: cart,
+                    ));
               },
             );
           }
