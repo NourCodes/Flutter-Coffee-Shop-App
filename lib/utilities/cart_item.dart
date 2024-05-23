@@ -1,3 +1,4 @@
+import 'package:coffee_shop_app/utilities/counter_box.dart';
 import 'package:flutter/material.dart';
 import '../models/coffee_model.dart';
 
@@ -20,6 +21,8 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
+  int max = 10;
+  int min = 0;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -48,6 +51,16 @@ class _CartItemState extends State<CartItem> {
               "\$ ${widget.coffee.price.toString()}",
             ),
           ],
+        ),
+        trailing: CounterBox(
+          cof: widget.coffee,
+          color: Theme.of(context).primaryColorLight,
+          selectedValue: widget.count,
+          increment: () {},
+          decrement: () {},
+          initialValue: widget.count,
+          minValue: min,
+          maxValue: max,
         ),
       ),
     );
