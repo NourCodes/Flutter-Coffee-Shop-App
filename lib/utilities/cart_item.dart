@@ -1,6 +1,7 @@
 import 'package:coffee_shop_app/utilities/counter_box.dart';
 import 'package:flutter/material.dart';
 import '../models/coffee_model.dart';
+import '../services/data.dart';
 
 class CartItem extends StatefulWidget {
   final Coffee coffee;
@@ -23,6 +24,21 @@ class CartItem extends StatefulWidget {
 class _CartItemState extends State<CartItem> {
   int max = 10;
   int min = 0;
+
+  Future incrementCounter() async {
+    if (widget.count + 1 <= max) {
+      setState(() {
+        widget.count += 1;
+      });
+    }
+    await Data().changeCount(
+      widget.count,
+      widget.userId,
+      widget.coffee,
+      widget.orderId,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -56,7 +72,7 @@ class _CartItemState extends State<CartItem> {
           cof: widget.coffee,
           color: Theme.of(context).primaryColorLight,
           selectedValue: widget.count,
-          increment: () {},
+          increment: () => incrementCounter(),
           decrement: () {},
           initialValue: widget.count,
           minValue: min,
