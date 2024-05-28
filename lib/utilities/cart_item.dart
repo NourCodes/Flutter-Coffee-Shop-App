@@ -1,6 +1,8 @@
 import 'package:coffee_shop_app/utilities/counter_box.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/coffee_model.dart';
+import '../provider/cart_provider.dart';
 import '../services/data.dart';
 
 class CartItem extends StatefulWidget {
@@ -39,6 +41,27 @@ class _CartItemState extends State<CartItem> {
     );
   }
 
+  Future decrementCounter() async {
+    if (widget.count - 1 >= min) {
+      setState(() {
+        widget.count -= 1;
+      });
+      await Data().changeCount(
+        widget.count,
+        widget.userId,
+        widget.coffee,
+        widget.orderId,
+      );
+      if (mounted) {
+        Provider.of<CartProvider>(context, listen: false).removeItems(
+          widget.coffee,
+          widget.userId,
+          widget.orderId,
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -73,7 +96,7 @@ class _CartItemState extends State<CartItem> {
           color: Theme.of(context).primaryColorLight,
           selectedValue: widget.count,
           increment: () => incrementCounter(),
-          decrement: () {},
+          decrement: () => decrementCounter(),
           initialValue: widget.count,
           minValue: min,
           maxValue: max,
