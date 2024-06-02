@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_shop_app/provider/cart_provider.dart';
 import 'package:coffee_shop_app/utilities/cart_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../models/coffee_model.dart';
 import '../services/auth.dart';
 import '../services/data.dart';
@@ -53,94 +55,103 @@ class _CartScreenState extends State<CartScreen> {
                 }).toList();
                 // if data is available, display it
                 return Expanded(
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    itemCount: cartItems.length,
-                    itemBuilder: (context, index) {
-                      Coffee cart = cartItems[index];
-                      return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CartItem(
-                            orderId: cart.id,
-                            count: cart.count,
-                            userId: currentUserId,
-                            coffee: cart,
-                          ));
-                    },
-                  ),
-                );
-              }
-            },
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.only(top: 35, right: 25, left: 25, bottom: 10),
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Theme.of(context).focusColor,
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(10),
-                ),
-              ),
-              child: Column(
-                children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Column(
                     children: [
-                      Text(
-                        "Total Price",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w400,
+                      Expanded(
+                        child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          itemCount: cartItems.length,
+                          itemBuilder: (context, index) {
+                            Coffee cart = cartItems[index];
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: CartItem(
+                                orderId: cart.id,
+                                count: cart.count,
+                                userId: currentUserId,
+                                coffee: cart,
+                              ),
+                            );
+                          },
                         ),
                       ),
-                      Text(
-                        "\$200",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 35, right: 25, left: 25, bottom: 10),
+                        child: Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).focusColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Total Price",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  Text(
+                                    "\$ ${Provider.of<CartProvider>(context).getTotal(currentUserId, cartItems).toStringAsFixed(2)}",
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                    Radius.circular(
+                                      10,
+                                    ),
+                                  ),
+                                  border: Border.all(
+                                    color: Theme.of(context).primaryColorLight,
+                                  ),
+                                ),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: const Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        "Go to Checkout",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Colors.white,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(
-                          10,
-                        ),
-                      ),
-                      border: Border.all(
-                        color: Theme.of(context).primaryColorLight,
-                      ),
-                    ),
-                    child: InkWell(
-                      onTap: () {},
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            "Go to Checkout",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios,
-                            color: Colors.white,
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                );
+              }
+            },
           ),
         ],
       ),

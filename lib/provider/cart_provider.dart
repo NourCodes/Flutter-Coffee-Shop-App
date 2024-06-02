@@ -99,6 +99,17 @@ class CartProvider extends ChangeNotifier {
     }
   }
 
+  double getTotal(String userId, List<Coffee> cart) {
+    double total = 0;
+    // loop through each item in the cart
+    for (int i = 0; i < cart.length; i++) {
+      // for each item, add the product of its price and count to the total
+      total += cart[i].price * cart[i].count;
+    }
+    // return the total price of all items in the cart
+    return total;
+  }
+
   //removing items from cart
   removeItems(Coffee coffee, String userId, String orderId) async {
     // if the user exists in the cart and the cart is not empty
