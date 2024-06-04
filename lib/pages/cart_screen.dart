@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:coffee_shop_app/pages/checkout_page.dart';
 import 'package:coffee_shop_app/provider/cart_provider.dart';
 import 'package:coffee_shop_app/utilities/cart_item.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +124,14 @@ class _CartScreenState extends State<CartScreen> {
                                   ),
                                 ),
                                 child: InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const CheckoutScreen(),
+                                      ),
+                                    );
+                                  },
                                   child: const Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
