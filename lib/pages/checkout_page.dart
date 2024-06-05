@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
+import 'delivery_progress_page.dart';
+
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({super.key});
 
@@ -17,6 +19,49 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   String cardHolderName = "";
   String cvvCode = "";
   bool cvvFocused = false;
+
+  // payment method
+  void pay() {
+    if (formKey.currentState!.validate()) {
+      //if form is valid show dialog
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Confirm Payment"),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Text("Card Number: $cardNumber"),
+                Text("Expiry Date: $expiryDate"),
+                Text("Card Holder Name: $cardHolderName"),
+                Text("CVV: $cvvCode"),
+              ],
+            ),
+          ),
+          actions: [
+            //cancel button
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Cancel"),
+            ),
+            //yes button
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const DeliveryProgressScreen(),
+                  ),
+                );
+              },
+              child: const Text("Yes"),
+            ),
+          ],
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +114,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  pay();
+                },
                 child: const Text(
                   "Pay Now",
                   style: TextStyle(
