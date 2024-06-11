@@ -125,6 +125,7 @@ class _CartScreenState extends State<CartScreen> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
+                                    Navigator.pop(context);
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                         builder: (context) =>

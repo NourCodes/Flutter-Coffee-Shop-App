@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 List<String> selectedSize = [
   "S",
   "M",
@@ -14,7 +16,7 @@ class Coffee {
   final double rate;
   String id;
   final int count;
-
+  final Timestamp date; // use Timestamp from Firestore
   Coffee({
     required this.description,
     required this.title,
@@ -25,7 +27,9 @@ class Coffee {
     this.selectedSize = 'S', // default selectedSize to 'S'
     this.id = "",
     this.count = 1,
-  });
+    Timestamp? date,
+  }) : date =
+            date ?? Timestamp.now(); // set date to current time if not provided
 
   // Static method to construct a Coffee instance from a Map
   factory Coffee.fromJson(Map<String, dynamic> json) {
@@ -40,6 +44,7 @@ class Coffee {
       type: json['type'] as String,
       id: json["id"] as String,
       count: json['count'] as int,
+      date: json["date"],
     );
   }
 
@@ -55,6 +60,7 @@ class Coffee {
       'type': type,
       "id": id,
       "count": count,
+      "date": date,
     };
   }
 }

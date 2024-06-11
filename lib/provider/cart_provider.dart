@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_shop_app/utilities/methods.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 import '../models/coffee_model.dart';
 import '../services/data.dart';
+import 'package:intl/intl.dart';
 
 class CartProvider extends ChangeNotifier {
   // list of coffee
@@ -108,6 +111,39 @@ class CartProvider extends ChangeNotifier {
     }
     // return the total price of all items in the cart
     return total;
+  }
+
+  // generate a receipt
+  String getReceipt(String userId, List<Coffee> cart, Timestamp orderDate,
+      BuildContext context) {
+    final receipt = StringBuffer();
+    receipt.writeln("Here is your Receipt");
+    receipt.writeln();
+    String date = DateFormat("yyy-MM-dd HH:mm:ss").format(orderDate.toDate());
+    receipt.writeln(date);
+    receipt.writeln();
+    receipt.writeln("----------");
+
+    // header line for the receipt
+    String headerLine = '${'Name'.padRight(35)}Count';
+    receipt.writeln(headerLine);
+    receipt.writeln();
+
+    // loop through each item in the cart
+    for (int i = 0; i < cart.length; i++) {
+      String title = cart[i].title;
+      int count = cart[i].count;
+      String formattedLine = title.padRight(35) + count.toString();
+      receipt.writeln(formattedLine);
+    }
+
+    receipt.writeln("----------");
+    receipt.writeln();
+    receipt.writeln("Total Items: ${cart.length}");
+    receipt
+        .writeln("Total Price: \$${getTotal(userId, cart).toStringAsFixed(2)}");
+
+    return receipt.toString();
   }
 
   //removing items from cart

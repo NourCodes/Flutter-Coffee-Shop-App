@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coffee_shop_app/pages/coffee_detail.dart';
 import 'package:coffee_shop_app/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ class _ShopScreenState extends State<ShopScreen> {
         selectedSize: size,
         id: orderId,
         count: coffee.count,
+        date: Timestamp.now(),
       ),
       userId,
       orderId,
