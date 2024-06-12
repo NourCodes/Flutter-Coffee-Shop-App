@@ -125,7 +125,7 @@ class CartProvider extends ChangeNotifier {
     receipt.writeln("----------");
 
     // header line for the receipt
-    String headerLine = '${'Name'.padRight(35)}Count';
+    String headerLine = '${'Name'.padRight(20)}Count';
     receipt.writeln(headerLine);
     receipt.writeln();
 
@@ -133,16 +133,14 @@ class CartProvider extends ChangeNotifier {
     for (int i = 0; i < cart.length; i++) {
       String title = cart[i].title;
       int count = cart[i].count;
-      String formattedLine = title.padRight(35) + count.toString();
+      String formattedLine = title.padRight(28) + count.toString();
       receipt.writeln(formattedLine);
     }
 
     receipt.writeln("----------");
     receipt.writeln();
-    receipt.writeln("Total Items: ${cart.length}");
-    receipt
-        .writeln("Total Price: \$${getTotal(userId, cart).toStringAsFixed(2)}");
-
+    receipt.writeln("Total Items: \t ${cart.length}");
+    receipt.writeln("Total Price: \t \$${getTotal(userId, cart).toStringAsFixed(2)}");
     return receipt.toString();
   }
 
