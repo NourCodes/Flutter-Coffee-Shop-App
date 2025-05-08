@@ -21,7 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   navigateToHome() async {
-    await Future.delayed(const Duration(milliseconds: 2000), () {});
+    await Future.delayed(const Duration(milliseconds: 10000), () {});
 
     if (mounted) {
       Navigator.pushReplacement(

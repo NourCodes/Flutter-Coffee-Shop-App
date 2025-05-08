@@ -1,3 +1,4 @@
+import 'package:coffee_shop_app/pages/home_screen.dart';
 import 'package:coffee_shop_app/pages/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -85,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextField(
                         style: const TextStyle(color: Colors.black),
                         controller: _passwordController,
+                        obscureText: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -118,6 +120,21 @@ class _LoginScreenState extends State<LoginScreen> {
                             _emailController.text,
                             _passwordController.text,
                           );
+                          if (Auth().currentUser != null) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                    'Login failed. Please check your credentials.'),
+                              ),
+                            );
+                          }
                         },
                         child: const Text(
                           "Login",

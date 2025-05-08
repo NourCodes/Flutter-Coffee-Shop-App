@@ -87,6 +87,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       TextField(
                         style: const TextStyle(color: Colors.black),
                         controller: _passwordController,
+                        obscureText: true,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -119,6 +120,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           await Auth().signUp(
                             _emailController.text,
                             _passwordController.text,
+                          );
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
                           );
                         },
                         child: const Text(

@@ -44,6 +44,8 @@ dependencies:
   uuid:
   flutter_credit_card:
   intl:
+  geolocator:
+  geocoding:
 dev_dependencies:
   flutter_test:
     sdk: flutter
