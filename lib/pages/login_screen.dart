@@ -116,22 +116,31 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         onPressed: () async {
-                          await Auth().login(
-                            _emailController.text,
-                            _passwordController.text,
-                          );
-                          if (Auth().currentUser != null) {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
-                              ),
+                          try {
+                            final user = await Auth().login(
+                              _emailController.text.trim(),
+                              _passwordController.text.trim(),
                             );
-                          } else {
+
+                            if (user != null) {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const HomeScreen(),
+                                ),
+                              );
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text(
+                                      'Login failed. Please check your credentials.'),
+                                ),
+                              );
+                            }
+                          } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(
-                                    'Login failed. Please check your credentials.'),
+                              SnackBar(
+                                content: Text('Login error: ${e.toString()}'),
                               ),
                             );
                           }

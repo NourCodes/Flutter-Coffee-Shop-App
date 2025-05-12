@@ -1,3 +1,4 @@
+import 'package:coffee_shop_app/DeveloperPinLockPage.dart';
 import 'package:coffee_shop_app/pages/loading_page.dart';
 import 'package:coffee_shop_app/provider/cart_provider.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.dark,
           useMaterial3: true,
         ),
-        home: const MyHomePage(),
+        home: const DeveloperPinLock(),
       ),
     );
   }
